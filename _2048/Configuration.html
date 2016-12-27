@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="widtd=device-widtd" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="description" content="Configuration 2048 by Duck Ale" />
+
+		<title>2048 by Duck Ale, Configuration</title>
+
+		<link rel="stylesheet" type="text/css" href="Configuration.css">
+
+		<link href='http://fonts.googleapis.com/css?family=Oxygen:400,700' rel='stylesheet' type='text/css'>
+
+		<script type="text/javascript" src="Configuration.js"></script>
+
+	</head>
+
+	<body>
+
+		<div id="full">
+			<div id="header">
+				<div id="cadre_titre" class="cadre_titre">
+					<p  id="titre" class="titre">
+						Configuration
+					</p>
+				</div>
+			</div>
+
+			<div id="choix">
+				<br />
+				<label for="comboNombre">Type de chiffre</label>
+				<select id="comboNombre" class="combo" onchange="SaveConfiguration()">
+					<option value="Arabes">Arabes</option>
+					<option value="Romains">Romains</option>
+				</select>
+				<br />
+				<br />
+				<label for="comboCouleur">Couleurs</label>
+				<select id="comboCouleur" class="combo" onchange="SaveConfiguration()">
+					<option value="Couleur">Couleur</option>
+					<option value="Monochrome">Monochrome</option>
+				</select>
+				<br />
+			</div>
+
+			
+		
+				<form method="get" action="2048.html">
+					<button id="bouton" class="bouton" >
+						Retour
+					</button>
+				</form> 
+		
+
+			<footer>
+				<p>
+					&#xA9; Copyright by <b>Duck Ale</b> V1.0
+				</p>
+			</footer>
+
+			<script>
+				LoadConfiguration();
+				DeterminationCouleur();
+			</script>
+		</div>
+
+	</body>
+</html>
