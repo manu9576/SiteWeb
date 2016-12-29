@@ -22,10 +22,10 @@
 define('DB_NAME', 'Site');
 
 /** Utilisateur de la base de données MySQL. */
-define('DB_USER', 'root');
+define('DB_USER', 'wp_user');
 
 /** Mot de passe de la base de données MySQL. */
-define('DB_PASSWORD', 'Elios_151??');
+define('DB_PASSWORD', '***');
 
 /** Adresse de l’hébergement MySQL. */
 define('DB_HOST', 'localhost');
