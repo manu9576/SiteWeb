@@ -1,0 +1,120 @@
+[16-Feb-2017 19:28:32 UTC] PHP Parse error:  syntax error, unexpected 'public' (T_PUBLIC), expecting '{' in /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php on line 15
+[16-Feb-2017 19:33:57 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function FFinclude_once() in /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php:18
+Stack trace:
+#0 /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php(26): Zero_Plugin->__construct()
+#1 /var/www/SiteWeb/WP_Test/wp-settings.php(304): include_once('/var/www/SiteWe...')
+#2 /var/www/SiteWeb/WP_Test/wp-config.php(100): require_once('/var/www/SiteWe...')
+#3 /var/www/SiteWeb/WP_Test/wp-load.php(37): require_once('/var/www/SiteWe...')
+#4 /var/www/SiteWeb/WP_Test/wp-blog-header.php(13): require_once('/var/www/SiteWe...')
+#5 /var/www/SiteWeb/WP_Test/index.php(17): require('/var/www/SiteWe...')
+#6 {main}
+  thrown in /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php on line 18
+[16-Feb-2017 19:34:05 UTC] PHP Warning:  Division by zero in /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php on line 19
+[16-Feb-2017 19:34:05 UTC] PHP Warning:  Division by zero in /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php on line 19
+[16-Feb-2017 19:34:33 UTC] PHP Parse error:  syntax error, unexpected ')' in /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php on line 18
+[16-Feb-2017 19:41:21 UTC] PHP Parse error:  syntax error, unexpected 'public' (T_PUBLIC), expecting end of file in /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/newsletterwidget.php on line 17
+[18-Feb-2017 17:29:14 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function register_desactiation_hook() in /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php:24
+Stack trace:
+#0 /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php(30): Zero_Plugin->__construct()
+#1 /var/www/SiteWeb/WP_Test/wp-admin/includes/plugin.php(560): include_once('/var/www/SiteWe...')
+#2 /var/www/SiteWeb/WP_Test/wp-admin/plugins.php(42): activate_plugin('zero/zero.php', 'http://manu9576...', false)
+#3 {main}
+  thrown in /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php on line 24
+[18-Feb-2017 17:29:14 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function register_desactiation_hook() in /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php:24
+Stack trace:
+#0 /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php(30): Zero_Plugin->__construct()
+#1 /var/www/SiteWeb/WP_Test/wp-admin/includes/plugin.php(1882): include('/var/www/SiteWe...')
+#2 /var/www/SiteWeb/WP_Test/wp-admin/plugins.php(164): plugin_sandbox_scrape('zero/zero.php')
+#3 {main}
+  thrown in /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php on line 24
+[18-Feb-2017 17:29:14 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function register_desactiation_hook() in /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php:24
+Stack trace:
+#0 /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php(30): Zero_Plugin->__construct()
+#1 /var/www/SiteWeb/WP_Test/wp-admin/includes/plugin.php(1882): include('/var/www/SiteWe...')
+#2 /var/www/SiteWeb/WP_Test/wp-admin/plugins.php(164): plugin_sandbox_scrape('zero/zero.php')
+#3 {main}
+  thrown in /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php on line 24
+[18-Feb-2017 17:29:21 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function register_desactiation_hook() in /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php:24
+Stack trace:
+#0 /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php(30): Zero_Plugin->__construct()
+#1 /var/www/SiteWeb/WP_Test/wp-admin/includes/plugin.php(560): include_once('/var/www/SiteWe...')
+#2 /var/www/SiteWeb/WP_Test/wp-admin/plugins.php(42): activate_plugin('zero/zero.php', 'http://manu9576...', false)
+#3 {main}
+  thrown in /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php on line 24
+[18-Feb-2017 17:29:21 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function register_desactiation_hook() in /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php:24
+Stack trace:
+#0 /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php(30): Zero_Plugin->__construct()
+#1 /var/www/SiteWeb/WP_Test/wp-admin/includes/plugin.php(1882): include('/var/www/SiteWe...')
+#2 /var/www/SiteWeb/WP_Test/wp-admin/plugins.php(164): plugin_sandbox_scrape('zero/zero.php')
+#3 {main}
+  thrown in /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php on line 24
+[18-Feb-2017 17:29:21 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function register_desactiation_hook() in /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php:24
+Stack trace:
+#0 /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php(30): Zero_Plugin->__construct()
+#1 /var/www/SiteWeb/WP_Test/wp-admin/includes/plugin.php(1882): include('/var/www/SiteWe...')
+#2 /var/www/SiteWeb/WP_Test/wp-admin/plugins.php(164): plugin_sandbox_scrape('zero/zero.php')
+#3 {main}
+  thrown in /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php on line 24
+[18-Feb-2017 17:29:58 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function register_disactivation_hook() in /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php:24
+Stack trace:
+#0 /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php(30): Zero_Plugin->__construct()
+#1 /var/www/SiteWeb/WP_Test/wp-admin/includes/plugin.php(560): include_once('/var/www/SiteWe...')
+#2 /var/www/SiteWeb/WP_Test/wp-admin/plugins.php(42): activate_plugin('zero/zero.php', 'http://manu9576...', false)
+#3 {main}
+  thrown in /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php on line 24
+[18-Feb-2017 17:29:58 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function register_disactivation_hook() in /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php:24
+Stack trace:
+#0 /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php(30): Zero_Plugin->__construct()
+#1 /var/www/SiteWeb/WP_Test/wp-admin/includes/plugin.php(1882): include('/var/www/SiteWe...')
+#2 /var/www/SiteWeb/WP_Test/wp-admin/plugins.php(164): plugin_sandbox_scrape('zero/zero.php')
+#3 {main}
+  thrown in /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php on line 24
+[18-Feb-2017 17:29:58 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function register_disactivation_hook() in /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php:24
+Stack trace:
+#0 /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php(30): Zero_Plugin->__construct()
+#1 /var/www/SiteWeb/WP_Test/wp-admin/includes/plugin.php(1882): include('/var/www/SiteWe...')
+#2 /var/www/SiteWeb/WP_Test/wp-admin/plugins.php(164): plugin_sandbox_scrape('zero/zero.php')
+#3 {main}
+  thrown in /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php on line 24
+[18-Feb-2017 17:30:07 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function register_desactivation_hook() in /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php:24
+Stack trace:
+#0 /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php(30): Zero_Plugin->__construct()
+#1 /var/www/SiteWeb/WP_Test/wp-admin/includes/plugin.php(560): include_once('/var/www/SiteWe...')
+#2 /var/www/SiteWeb/WP_Test/wp-admin/plugins.php(42): activate_plugin('zero/zero.php', 'http://manu9576...', false)
+#3 {main}
+  thrown in /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php on line 24
+[18-Feb-2017 17:30:07 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function register_desactivation_hook() in /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php:24
+Stack trace:
+#0 /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php(30): Zero_Plugin->__construct()
+#1 /var/www/SiteWeb/WP_Test/wp-admin/includes/plugin.php(1882): include('/var/www/SiteWe...')
+#2 /var/www/SiteWeb/WP_Test/wp-admin/plugins.php(164): plugin_sandbox_scrape('zero/zero.php')
+#3 {main}
+  thrown in /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php on line 24
+[18-Feb-2017 17:30:08 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function register_desactivation_hook() in /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php:24
+Stack trace:
+#0 /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php(30): Zero_Plugin->__construct()
+#1 /var/www/SiteWeb/WP_Test/wp-admin/includes/plugin.php(1882): include('/var/www/SiteWe...')
+#2 /var/www/SiteWeb/WP_Test/wp-admin/plugins.php(164): plugin_sandbox_scrape('zero/zero.php')
+#3 {main}
+  thrown in /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php on line 24
+[19-Feb-2017 11:07:53 UTC] PHP Warning:  call_user_func_array() expects parameter 1 to be a valid callback, class 'Zero_Plugin' does not have a method 'menu_html' in /var/www/SiteWeb/WP_Test/wp-includes/class-wp-hook.php on line 298
+[19-Feb-2017 11:17:40 UTC] PHP Parse error:  syntax error, unexpected '<' in /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php on line 36
+[19-Feb-2017 11:43:31 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function add_settings_field() in /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php:26
+Stack trace:
+#0 /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php(55): Zero_Plugin->__construct()
+#1 /var/www/SiteWeb/WP_Test/wp-settings.php(304): include_once('/var/www/SiteWe...')
+#2 /var/www/SiteWeb/WP_Test/wp-config.php(100): require_once('/var/www/SiteWe...')
+#3 /var/www/SiteWeb/WP_Test/wp-load.php(37): require_once('/var/www/SiteWe...')
+#4 /var/www/SiteWeb/WP_Test/wp-admin/admin.php(31): require_once('/var/www/SiteWe...')
+#5 {main}
+  thrown in /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php on line 26
+[19-Feb-2017 11:44:48 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function add_settings_field() in /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/newsletter.php:11
+Stack trace:
+#0 /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php(20): Zero_Newsletter->__construct()
+#1 /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/zero.php(50): Zero_Plugin->__construct()
+#2 /var/www/SiteWeb/WP_Test/wp-settings.php(304): include_once('/var/www/SiteWe...')
+#3 /var/www/SiteWeb/WP_Test/wp-config.php(100): require_once('/var/www/SiteWe...')
+#4 /var/www/SiteWeb/WP_Test/wp-load.php(37): require_once('/var/www/SiteWe...')
+#5 /var/www/SiteWeb/WP_Test/wp-admin/admin.php(31): require_once('/var/www/SiteWe...')
+#6 {main}
+  thrown in /var/www/SiteWeb/WP_Test/wp-content/plugins/zero/newsletter.php on line 11

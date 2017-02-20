@@ -35,3 +35,6 @@ Icon
 .Spotlight-V100
 .Trashes
 
+WP_Test/wp-config.php
+ALIAA/wp-config.php
+deployment-config.json

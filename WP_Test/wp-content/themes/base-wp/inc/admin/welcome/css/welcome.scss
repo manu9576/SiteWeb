@@ -1,0 +1,121 @@
+//WELCOME CSS
+// Change the grid settings
+@import 'bourbon';
+
+// Change the grid settings
+$gutter: 3em;
+$grid-columns: 12;
+
+@import 'neat';
+
+@include media(780px) {
+    .panel {
+        .item {
+            @include span-columns(4);
+            @include omega(3n);
+        }
+        .theme_link {
+            @include span-columns(6);
+            @include omega(2n);
+        }
+        .plugins,
+        .themes {
+            @include span-columns(6);
+        }
+        .plugins {
+            @include omega();
+        }
+    }
+}
+
+.evidence {
+    background: #fff;
+    border: 1px solid #dedede;
+    margin-top: 1em;
+    padding: 15px;
+    h3 {
+        margin-top: 0;
+    }
+    .features {
+      font-size: .9em;
+        h4 {
+            text-transform: uppercase;
+            margin-bottom: 0;
+        }
+        p {
+          margin-top: 5px;
+        }
+    }
+
+    .dashicons {
+        color: #fc3;
+        margin-right: 5px;
+        vertical-align: text-bottom;
+    }
+    .button-upgrade {
+        background: #fc3;
+        border:1px solid darken(#fc3,15%);
+        border-top-color: darken(#fc3,5%);
+        color: #5d4b16;
+        text-transform: uppercase;
+        display: inline-block;
+        text-decoration: none;
+        font-size: 13px;
+        line-height: 30px;
+        height: 32px;
+        margin: 0;
+        padding: 0 20px 1px;
+        cursor: pointer;
+        -webkit-appearance: none;
+        -webkit-border-radius: 2px;
+        border-radius: 2px;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        -webkit-box-shadow: 0 1px 0 darken(#fc3,20%);
+        box-shadow: 0 1px 0 darken(#fc3,20%);
+        text-shadow: 2px 2px #fd3;
+        &:hover,
+        &:focus {
+            background: #fd3;
+            color: #5d4b16;
+            border-color: darken(#fc3,5%);
+        }
+    }
+}
+.theme-name {
+    font-weight: bold;
+    .version {
+        font-size: 14px;
+        background: #fff;
+        padding: 5px 10px;
+        margin-left: 5px;
+    }
+}
+//items
+.items {
+    clear: both;
+    display: inline-block;
+    width: 100%;
+    .product {
+        display: block;
+        background: #ececec;
+        margin: 10px 0;
+        padding: 10px 8px;
+        .name {
+            font-weight: bold;
+        }
+        .status,
+        .buttons {
+            float: right;
+        }
+        .status {
+            color: green;
+        }
+        a {
+            text-decoration: none;
+        }
+    }
+
+}
