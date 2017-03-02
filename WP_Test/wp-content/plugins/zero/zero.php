@@ -31,9 +31,18 @@ class Zero_Plugin
 
     public function add_admin_menu()
     {
-        add_menu_page('Zero plugin', 'Zero plugin', 'manage_options', 'zero', array($this, 'menu_html'));
-        add_submenu_page('zero', 'Apercu', 'Apercu', 'manage_options', 'zero', array($this, 'menu_html'));
+        add_menu_page('Zero plugin', 'Zero plugin', 'manage_options', 'zero_main', array($this, 'menu_presentation_html'));
+        add_submenu_page('zero_main', 'Envoi newsletter', 'Envoi newsletter', 'manage_options', 'zero_apercu', array($this, 'menu_html'));
     }
+
+
+    public function menu_presentation_html()
+    {
+      echo '<h1>'.get_admin_page_title().'</h1>';
+
+       echo '<p>Bienvenue sur la page d\'accueil du plugin</p>';
+    }
+
 
     public function menu_html()
     {
