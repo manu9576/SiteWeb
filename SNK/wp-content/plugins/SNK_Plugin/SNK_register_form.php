@@ -1,85 +1,188 @@
 <?php
 
+include_once WP_PLUGIN_DIR . '/wp-session-manager/wp-session-manager.php';
+include_once plugin_dir_path( __FILE__ ).'SNK_registrationManager.php';
+
 
 class SNK_register_form
 {
+  private $_registration;
+  private $_manager;
+
+  const NOM ="Entrez votre nom";
+  const PRENOM = "Entrez votre prenom";
+  const ADRESSE = "Entrez votre adresse";
+  const VILLE = "Entrez votre ville";
+  const TELEPHONE = "Entrez votre numéro de Téléphone";
+  const EMAIL = "Entrez votre Email";
 
   function __construct()
   {
-    add_shortcode('SNK_register_form', array($this, 'formulaire_EtatCivil'));
-    add_action('wp_loaded', array($this, 'next_page'));
+    add_shortcode('SNK_register_form', array($this, 'affichagePage'));
+    $this->_manager = new SNK_registrationManager();
   }
 
-  public function formulaire_EtatCivil($atts, $content)
+  public function affichagePage()
+  {
+    ob_start();
+
+    $current_user_id = get_current_user_id();
+
+    if($current_user_id == 0)
+    {
+      // impossible de s'enregistrer si l'utilisateur n'est pas identifié
+      $this->messageUserNonEnregistree_HTLM();
+    }
+    else
+    {
+     // recupération des information de l'enregistrement
+     $this->_registration = $this->_manager->getUserRegistration();
+
+     // lecture de tous les champs possibles lors d'un post
+     $this->lectureChamps($_POST);
+
+     if (isset($_POST['nom']))
+     {
+       // on vient de la page etat civil => on affiche la page formation continue
+       $this->formulaireFormationContinue_HTML();
+     }
+     elseif(isset($_POST['soumettre']))
+     {
+       // on vient de la page formation continu et on a valide le formulaire
+      $this->_manager->addOrUpdate($this->_registration);
+      $this->confimationEnregistrement_HTML();
+     }
+     else
+     {
+       // par defaut on va sur la page Etat Civi
+       // on vient de la page formation continu et on veut retourner sur la page etat civil
+       $this->formulaireEtatCivil_HTML();
+     }
+
+    }
+
+    $output_string=ob_get_contents();;
+    ob_end_clean();
+
+    return $output_string;
+  }
+
+  public function lectureChamps($array)
+  {
+
+    if(isset($array['nom']))
+      $this->_registration->setNom( htmlspecialchars($array['nom']));
+
+    if(isset($array['prenom']))
+      $this->_registration->setPrenom( htmlspecialchars($array['prenom']));
+
+    if(isset($array['adresse']))
+      $this->_registration->setAdresse( htmlspecialchars($array['adresse']));
+
+    if(isset($array['codePostal']))
+      $this->_registration->setCodePostal($array['codePostal']);
+
+    if(isset($array['ville']))
+      $this->_registration->setVille( htmlspecialchars($array['ville']));
+
+    if(isset($array['telephone']))
+      $this->_registration->setTelephone( htmlspecialchars($array['telephone']));
+
+    if(isset($array['email']))
+      $this->_registration->setEmail( htmlspecialchars($array['email']));
+
+    if(isset($array['nombre_heure']))
+      $this->_registration->setNombreHeuresValidees($array['nombre_heure']);
+
+    if(is_a($this->_registration, 'SNK_registration'))
+      $this->_manager->addOrUpdate($this->_registration);
+
+  }
+
+  public function messageUserNonEnregistree_HTLM()
   {
     ?>
-    <h2> Etat Civil <h2/>
 
+    <div class="post hentry ivycat-post" >
+      <h1 class="entry-title">Enregistrement impossible.</h1>
+      <p>
+      Il faut créer être inscrit sur le site pour pouvoir s'enregistrer.
+      <a href="<?php echo wp_login_url( get_permalink() ); ?>" title="Login">Login</a>
+    </p>
+    </div>
+
+    <?php
+  }
+
+  public function formulaireEtatCivil_HTML()
+  {
+    ?>
+
+    <fieldset>
+      <legend>Etat Civil </legend>
       <form action="" method="post">
         <p>
-
           <label for="nom">Nom : </label>
-          <input type="text" name="nom" id="nom"/>
+          <input type="text" name="nom" id="nom" placeholder="<?= self::NOM ?>"value= "<?= htmlspecialchars($this->_registration->nom())?>"
 
           <label for="prenom">Prénom : </label>
-          <input type="text" name="prenom" id="prenom"/>
+          <input type="text" name="prenom" id="prenom" placeholder="<?= self::PRENOM ?>" value= "<?= htmlspecialchars($this->_registration->prenom())?>" />
 
           <label for="adresse">Adresse : </label>
-          <input type="text" name="adresse" id="adresse"/>
+          <input type="text" name="adresse" id="adresse" placeholder="<?= self::ADRESSE ?>" value= "<?= htmlspecialchars($this->_registration->adresse())?>" />
 
           <label for="codePostal">Code postal : </label>
-          <input type="text" name="codePostal" id="codePostal"/>
+          <input type="number" name="codePostal" id="codePostal" value= <?= $this->_registration->codePostal()?> />
 
           <label for="ville">Ville : </label>
-          <input type="text" name="ville" id="ville"/>
+          <input type="text" name="ville" id="ville" placeholder="<?= self::VILLE ?>" value= "<?= htmlspecialchars($this->_registration->ville())?>" />
 
           <label for="telephone">Téléphone : </label>
-          <input type="tel" name="telephone" id="telephone"/>
+          <input type="tel" name="telephone" id="telephone" placeholder="<?= self::TELEPHONE ?>" value= "<?= htmlspecialchars($this->_registration->telephone())?>" />
 
           <label for="form-message">Email:</label>
-          <input type="email" name="form-message" id="form-message"/>
-
+          <input type="email" name="email" id="email" placeholder="<?= self::EMAIL ?>" value= "<?= htmlspecialchars($this->_registration->email())?>" />
         </p>
-        <input value="Formation continue" type="submit"/>
-      </form>
-      <?php
-    }
-
-
-
-    public function formulaire_FormationContinue()
-    {
-
-      ?>
-
-
-      <h2> Formation continue <h2/>
-
-        <form action="" method="post">
-          <p>
-
-            <label for="nombre_heure">Nombre d'heure validées : </label>
-            <input type="text" name="nombre_heure" id="nombre_heure"/>
-
-
-          </p>
+        <p>
           <input value="Formation continue" type="submit"/>
-        </form>
-        <?php
+        </p>
+      </form>
+    </fieldset>
+    <?php
+    return;
+  }
 
+  public function formulaireFormationContinue_HTML()
+  {
+    ?>
 
-      }
+    <fieldset>
+      <legend>Formation continue </legend>
+      <form action="" method="post">
+        <p>
+          <label for="nombre_heure">Nombre d'heure validées : </label>
+          <input type="number" name="nombre_heure" id="nombre_heure"  value= "<?= $this->_registration->nombreHeuresValidees()?>"/>
+        </p>
+        <p>
+          <input value="Etat civil" type="submit" name="etatCivil"/>
+          <input value="Soummettre" type="submit" name="soumettre"/>
+        </p>
+      </form>
+    </fieldset>
 
+    <?php
+  }
 
+  public function confimationEnregistrement_HTML()
+  {
+    ?>
+    <fieldset>
+      <legend>Enregistrement </legend>
+      <p>
+        L'enregistrement s'est bien déroulé. Vous receverez une confirmation de votre enregistrement par mail.
+      </p>
+    </fieldset>
+    <?php
+  }
 
-      public function next_page()
-      {
-
-        echo "<h2> Etat Civil <h2/>";
-        if (isset($_POST['Formation-continue']))
-        {
-          formulaire_FormationContinue();
-        }
-    }
-
-}
+  }

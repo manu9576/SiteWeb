@@ -11,20 +11,27 @@ Author URI: http://manu9576.freeboxos.fr
 License: GPL2
 */
 
-class SNK_Plugin
+
+class SNK_plugin
 {
 
   public function __construct()
   {
 
-  
-    /* Permet l'enregistrement du fichier */
-    include_once plugin_dir_path( __FILE__ ).'/SNK_register.php';
-    new SNK_register();
+    /*Permet la creation du short code pour la form d'enregistrement*/
+    include_once plugin_dir_path( __FILE__ ).'SNK_registration.php';
+    new SNK_registration(['nom'=> "test"]);
+
+    /*Permet la creation du short code pour la form d'enregistrement*/
+    include_once plugin_dir_path( __FILE__ ).'SNK_register_form.php';
+    new SNK_register_form();
+
+    include_once plugin_dir_path( __FILE__ ).'SNK_registrationManager.php';
+
 
     /* Permet la creation et la suppresion des tables de la base de donnee */
-    register_activation_hook(__FILE__, array('SNK_Plugin', 'install'));
-    register_uninstall_hook(__FILE__, array('SNK_Plugin', 'uninstall'));
+    register_activation_hook(__FILE__, array('SNK_plugin', 'install'));
+    register_uninstall_hook(__FILE__, array('SNK_plugin', 'uninstall'));
 
     /* permet l'enregistremen dans la base de données d'un mail */
     add_action('wp_loaded', array($this, 'save_email'));
@@ -34,27 +41,25 @@ class SNK_Plugin
 
     /* prepare les paramétres de l'envoie d'une newsletter */
     add_action('admin_init', array($this, 'register_settings'));
-
-    /*Permet la creation du short code pour la form d'enregistrement*/
-    include_once plugin_dir_path( __FILE__ ).'SNK_register_form.php';
-        new SNK_register_form();
   }
 
-
+  /* fonction qui cree les paramétres pour la newsletter */
   public function register_settings()
   {
-    register_setting('SNK_newsletter_settings', 'SNK_newsletter_sender');
     register_setting('SNK_newsletter_settings', 'SNK_newsletter_object');
     register_setting('SNK_newsletter_settings', 'SNK_newsletter_content');
 
-    add_settings_section('SNK_newsletter_section', 'Newsletter parameters', array($this, 'section_html'), 'SNK_newsletter_settings');
-    add_settings_field('SNK_newsletter_sender', 'Expéditeur', array($this, 'sender_html'), 'SNK_newsletter_settings', 'SNK_newsletter_section');
+    add_settings_section('SNK_newsletter_section', 'Envoi d\'une newsletter', array($this, 'envoi_newsletter_html'), 'SNK_newsletter_settings');
     add_settings_field('SNK_newsletter_object', 'Objet', array($this, 'object_html'), 'SNK_newsletter_settings', 'SNK_newsletter_section');
     add_settings_field('SNK_newsletter_content', 'Contenu', array($this, 'content_html'), 'SNK_newsletter_settings', 'SNK_newsletter_section');
 
   }
 
+  //==============================================
+  //          GESTION DES NEWSLETTER
+  //==============================================
 
+  /* fonction qui envoie la news la lettre */
   public function send_newsletter()
   {
     global $wpdb;
@@ -62,7 +67,6 @@ class SNK_Plugin
     $recipients = $wpdb->get_results("SELECT email FROM {$wpdb->prefix}SNK_newsletter_email");
     $object = get_option('SNK_newsletter_object', 'Newsletter');
     $content = get_option('SNK_newsletter_content', 'Mon contenu');
-    $sender = get_option('SNK_newsletter_sender', 'no-reply@example.com');
     $header = array('From: '.$sender);
     foreach ($recipients as $_recipient)
     {
@@ -71,8 +75,22 @@ class SNK_Plugin
 
   }
 
+  public function save_email()
+  {
+    if (isset($_POST['SNK_newsletter_email']) && !empty($_POST['SNK_newsletter_email']))
+    {
+      global $wpdb;
+      $email = $_POST['SNK_newsletter_email'];
 
-  public function section_html()
+      $row = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}SNK_register WHERE email = '$email'");
+      if (is_null($row)) {
+        $wpdb->insert("{$wpdb->prefix}SNK_register", array('email' => $email));
+      }
+    }
+  }
+
+  /* Menu generale qui affiche la page de garde du plugin */
+  public function envoi_newsletter_html()
   {
     echo 'Renseignez les paramètres d\'envoi de la newsletter.';
   }
@@ -83,23 +101,24 @@ class SNK_Plugin
     <?php
   }
 
-  public function sender_html()
-  {?>
-    <input type="text" name="SNK_newsletter_sender" value="<?php echo get_option('SNK_newsletter_sender')?>"/>
-    <?php
-  }
-
   public function content_html()
   {?>
     <textarea name="SNK_newsletter_content"><?php echo get_option('SNK_newsletter_content')?></textarea>
     <?php
   }
 
+  //==============================================
+  //          GESTION DES MENUS D'ADMINISTRATION
+  //==============================================
+
   public function add_admin_menu()
   {
     add_menu_page('SNK plugin', 'SNK plugin', 'manage_options', 'snk', array($this, 'presentation_html'));
-    $hook = add_submenu_page('snk', 'Apercu', 'Apercu', 'manage_options', 'SNK', array($this, 'menu_html'));
+    $hook = add_submenu_page('snk', 'Envoi d\'une newsletter', 'Envoi newsletter', 'manage_options', 'SNK_send_newsletter', array($this, 'contenu_newsletter_html'));
     add_action('load-'.$hook, array($this, 'process_action'));
+
+    add_submenu_page('snk', 'Liste des enregistrements', 'Enregistrements', 'manage_options', 'SNK_manage_registration', array($this, 'contenu_enregistrement_html'));
+
   }
 
 
@@ -111,16 +130,48 @@ class SNK_Plugin
     }
   }
 
+  public function contenu_enregistrement_html()
+  {
+    $manager = new SNK_registrationManager();
+
+    $enregistrements = $manager->getList();
+
+    echo '<h1>'.get_admin_page_title().'</h1>';
+
+    ?>
+      <table>
+        <tr>
+          <th>Nom</th>
+          <th>Prenom</th>
+          <th>Mail</th>
+        </tr>
+
+      <?php
+      foreach($enregistrements as $enr)
+      {
+        ?>
+        <tr>
+            <th><?= $enr->nom(); ?> </th>
+            <th><?= $enr->prenom(); ?></th>
+            <th><?= $enr->email(); ?></th>
+        </tr>
+        <?php
+      }
+      ?>
+      </table>
+    <?php
+
+
+  }
+
   public function presentation_html()
   {
       echo '<h1>'.get_admin_page_title().'</h1>';
       echo 'Page d\'aministation de ' .get_admin_page_title();
   }
 
-  public function menu_html()
+  public function contenu_newsletter_html()
   {
-    echo '<h1>'.get_admin_page_title().'</h1>';
-
     ?>
     <form method="post" action="options.php">
       <?php settings_fields('SNK_newsletter_settings') ?>
@@ -136,32 +187,26 @@ class SNK_Plugin
     <?php
   }
 
+  /* fonction appelée à la l'activation du plugin, cree les tables dans la base de données*/
   public static function install()
   {
     global $wpdb;
 
     $wpdb->query("CREATE TABLE IF NOT EXISTS {$wpdb->prefix}SNK_register (id INT AUTO_INCREMENT PRIMARY KEY, email VARCHAR(255) NOT NULL);");
+    $wpdb->query("CREATE TABLE IF NOT EXISTS {$wpdb->prefix}SNK_registrations (id INT AUTO_INCREMENT PRIMARY KEY , nom TEXT NOT NULL , prenom TEXT NOT NULL ,
+      adresse TEXT NOT NULL , codePostal INT NOT NULL DEFAULT '0' , ville TEXT NOT NULL , telephone TEXT NOT NULL , email TEXT NOT NULL, nombreHeuresValidees INT NOT NULL DEFAULT '0' );");
   }
 
+  /* fonction appelée à la suppression du plugin, détruit les tables dans la base de données*/
   public static function uninstall()
   {
     global $wpdb;
 
     $wpdb->query("DROP TABLE IF EXISTS {$wpdb->prefix}SNK_register;");
+    $wpdb->query("DROP TABLE IF EXISTS {$wpdb->prefix}SNK_registrations;");
+
   }
 
-  public function save_email()
-  {
-    if (isset($_POST['SNK_newsletter_email']) && !empty($_POST['SNK_newsletter_email'])) {
-      global $wpdb;
-      $email = $_POST['SNK_newsletter_email'];
-
-      $row = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}SNK_register WHERE email = '$email'");
-      if (is_null($row)) {
-        $wpdb->insert("{$wpdb->prefix}SNK_register", array('email' => $email));
-      }
-    }
-  }
 }
 
 new SNK_Plugin();
