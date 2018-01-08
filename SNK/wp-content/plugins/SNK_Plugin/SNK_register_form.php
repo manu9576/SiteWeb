@@ -106,8 +106,8 @@ class SNK_register_form
     <div class="post hentry ivycat-post" >
       <h1 class="entry-title">Enregistrement impossible.</h1>
       <p>
-      Il faut créer être inscrit sur le site pour pouvoir s'enregistrer.
-      <a href="<?php echo wp_login_url( get_permalink() ); ?>" title="Login">Login</a>
+      Il faut être connecté sur le site pour pouvoir s'enregistrer.</br>
+      Lien vers la connection du site : <a href="<?php echo wp_login_url( get_permalink() ); ?>" title="Login">Login</a>
     </p>
     </div>
 
@@ -116,32 +116,40 @@ class SNK_register_form
 
   public function formulaireEtatCivil_HTML()
   {
+
+    $readonly = ($this->_registration->valider() == 0) ?  "": "readonly";
+
+    if($readonly == "readonly")
+    {
+      echo "<h3> La modification est impossible : le formulaire a été validé par l'administrateur </h3></br>";
+    }
     ?>
 
     <fieldset>
       <legend>Etat Civil </legend>
+
       <form action="" method="post">
         <p>
           <label for="nom">Nom : </label>
-          <input type="text" name="nom" id="nom" placeholder="<?= self::NOM ?>"value= "<?= htmlspecialchars($this->_registration->nom())?>"
+          <input type="text" <?=$readonly?> name="nom" id="nom" placeholder="<?= self::NOM ?>"value= "<?= htmlspecialchars($this->_registration->nom())?>"
 
           <label for="prenom">Prénom : </label>
-          <input type="text" name="prenom" id="prenom" placeholder="<?= self::PRENOM ?>" value= "<?= htmlspecialchars($this->_registration->prenom())?>" />
+          <input type="text" <?=$readonly?> name="prenom" id="prenom" placeholder="<?= self::PRENOM ?>" value= "<?= htmlspecialchars($this->_registration->prenom())?>" />
 
           <label for="adresse">Adresse : </label>
-          <input type="text" name="adresse" id="adresse" placeholder="<?= self::ADRESSE ?>" value= "<?= htmlspecialchars($this->_registration->adresse())?>" />
+          <input type="text" <?=$readonly?> name="adresse" id="adresse" placeholder="<?= self::ADRESSE ?>" value= "<?= htmlspecialchars($this->_registration->adresse())?>" />
 
           <label for="codePostal">Code postal : </label>
-          <input type="number" name="codePostal" id="codePostal" value= <?= $this->_registration->codePostal()?> />
+          <input type="number" <?=$readonly?> name="codePostal" id="codePostal" value= <?= $this->_registration->codePostal()?> />
 
           <label for="ville">Ville : </label>
-          <input type="text" name="ville" id="ville" placeholder="<?= self::VILLE ?>" value= "<?= htmlspecialchars($this->_registration->ville())?>" />
+          <input type="text" <?=$readonly?> name="ville" id="ville" placeholder="<?= self::VILLE ?>" value= "<?= htmlspecialchars($this->_registration->ville())?>" />
 
           <label for="telephone">Téléphone : </label>
-          <input type="tel" name="telephone" id="telephone" placeholder="<?= self::TELEPHONE ?>" value= "<?= htmlspecialchars($this->_registration->telephone())?>" />
+          <input type="tel" <?=$readonly?> name="telephone" id="telephone" placeholder="<?= self::TELEPHONE ?>" value= "<?= htmlspecialchars($this->_registration->telephone())?>" />
 
           <label for="form-message">Email:</label>
-          <input type="email" name="email" id="email" placeholder="<?= self::EMAIL ?>" value= "<?= htmlspecialchars($this->_registration->email())?>" />
+          <input type="email" <?=$readonly?> name="email" id="email" placeholder="<?= self::EMAIL ?>" value= "<?= htmlspecialchars($this->_registration->email())?>" />
         </p>
         <p>
           <input value="Formation continue" type="submit"/>
@@ -154,18 +162,30 @@ class SNK_register_form
 
   public function formulaireFormationContinue_HTML()
   {
+
+    $readonly = ($this->_registration->valider() == 0) ?  "": "readonly";
+    if($readonly == "readonly")
+    {
+      echo "<h3> La modification est impossible : le formulaire a été validé par l'administrateur </h3></br>";
+    }
     ?>
 
     <fieldset>
       <legend>Formation continue </legend>
+
       <form action="" method="post">
         <p>
           <label for="nombre_heure">Nombre d'heure validées : </label>
-          <input type="number" name="nombre_heure" id="nombre_heure"  value= "<?= $this->_registration->nombreHeuresValidees()?>"/>
+          <input type="number" <?=$readonly?> name="nombre_heure" id="nombre_heure"  value= "<?= $this->_registration->nombreHeuresValidees()?>"/>
         </p>
         <p>
           <input value="Etat civil" type="submit" name="etatCivil"/>
-          <input value="Soummettre" type="submit" name="soumettre"/>
+          <?php
+
+            if($readonly != "readonly")
+              echo "<input value=\"Soummettre\" type=\"submit\" name=\"soumettre\"/>";
+          ?>
+
         </p>
       </form>
     </fieldset>

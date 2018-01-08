@@ -4,15 +4,16 @@ Class SNK_registration
 {
 
   private $_id,
-  $_id_WP, // id de l'utilisateur de wordpress , permet de savoir quel utilisateur à creer l'enregistrement
-  $_nom,
-  $_prenom,
-  $_adresse,
-  $_codePostal,
-  $_ville,
-  $_telephone,
-  $_email,
-  $_nombreHeuresValidees;
+          $_id_WP, // id de l'utilisateur de wordpress , permet de savoir quel utilisateur à creer l'enregistrement
+          $_nom,
+          $_prenom,
+          $_adresse,
+          $_codePostal,
+          $_ville,
+          $_telephone,
+          $_email,
+          $_nombreHeuresValidees,
+          $_valider;
 
   public function id()
   {
@@ -62,6 +63,11 @@ Class SNK_registration
   public function nombreHeuresValidees()
   {
     return $this->_nombreHeuresValidees;
+  }
+
+  public function valider()
+  {
+    return $this->_valider;
   }
 
   public function setId($id)
@@ -135,10 +141,8 @@ Class SNK_registration
     }
   }
 
-
   public function setEmail($email)
   {
-
     if(is_string($email))
     {
       $this->_email = $email ;
@@ -155,6 +159,14 @@ Class SNK_registration
     }
   }
 
+  public function setValider($bool)
+  {
+    $bool = (int) $bool;
+
+    $this->_valider = ($bool == 1);
+
+  }
+
   public function __construct(array $donnees)
   {
     // on fixe les valeurs par defaut
@@ -167,6 +179,7 @@ Class SNK_registration
     $this->_telephone = "";
     $this->_email= "";
     $this->_nombreHeuresValidees = 0;
+    $this->_valider = 0;
 
     $this->hydrate($donnees);
   }
@@ -194,6 +207,17 @@ Class SNK_registration
         $this->$method($value);
       }
     }
+  }
+
+  public function getWpUserName()
+  {
+
+    $user_info = get_userdata($this->_id_WP);
+
+    if( $user_info == false)
+      return "Utilisateur inconnu";
+    else
+      return $user_info->user_login;
   }
 }
  ?>
