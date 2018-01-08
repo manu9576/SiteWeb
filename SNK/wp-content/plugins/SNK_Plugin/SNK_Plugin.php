@@ -11,7 +11,6 @@ Author URI: http://manu9576.freeboxos.fr
 License: GPL2
 */
 
-
 class SNK_plugin
 {
 
@@ -49,8 +48,6 @@ class SNK_plugin
     // ajout du menu d'administration avec la liste des enregistrements
     $listeEnregistrement=  new SNK_Adm_ListeRegistrations();
     add_submenu_page('snk', 'Liste des enregistrements', 'Enregistrements', 'manage_options', 'SNK_manage_registration', array($listeEnregistrement, 'affichagePage'));
-
-
   }
 
   public function presentation_html()

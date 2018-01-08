@@ -35,6 +35,7 @@ class SNK_Adm_Newsletter
     $object = get_option('SNK_newsletter_object', 'Newsletter');
     $content = get_option('SNK_newsletter_content', 'Mon contenu');
     $header = array('From: '.$sender);
+    
     foreach ($recipients as $_recipient)
     {
       $result = wp_mail($_recipient->email, $object, $content, $header);
@@ -63,14 +64,16 @@ class SNK_Adm_Newsletter
   }
 
   public function object_html()
-  {?>
-    <input type="text" name="SNK_newsletter_object" value="<?php echo get_option('SNK_newsletter_object')?>"/>
+  {
+    ?>
+      <input type="text" name="SNK_newsletter_object" value="<?php echo get_option('SNK_newsletter_object')?>"/>
     <?php
   }
 
   public function content_html()
-  {?>
-    <textarea name="SNK_newsletter_content"><?php echo get_option('SNK_newsletter_content')?></textarea>
+  {
+    ?>
+      <textarea name="SNK_newsletter_content"><?php echo get_option('SNK_newsletter_content')?></textarea>
     <?php
   }
 
@@ -85,16 +88,16 @@ class SNK_Adm_Newsletter
   public function contenu_newsletter_html()
   {
     ?>
-    <form method="post" action="options.php">
-      <?php settings_fields('SNK_newsletter_settings') ?>
-      <?php do_settings_sections('SNK_newsletter_settings') ?>
-      <?php submit_button(); ?>
-    </form>
+      <form method="post" action="options.php">
+        <?php settings_fields('SNK_newsletter_settings') ?>
+        <?php do_settings_sections('SNK_newsletter_settings') ?>
+        <?php submit_button(); ?>
+      </form>
 
-    <form method="post" action="">
-      <input type="hidden" name="send_newsletter" value="1"/>
-      <?php submit_button('Envoyer la newsletter') ?>
-    </form>
+      <form method="post" action="">
+        <input type="hidden" name="send_newsletter" value="1"/>
+        <?php submit_button('Envoyer la newsletter') ?>
+      </form>
 
     <?php
   }

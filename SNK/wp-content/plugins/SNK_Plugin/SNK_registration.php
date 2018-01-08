@@ -220,4 +220,4 @@ Class SNK_registration
       return $user_info->user_login;
   }
 }
- ?>
+?>

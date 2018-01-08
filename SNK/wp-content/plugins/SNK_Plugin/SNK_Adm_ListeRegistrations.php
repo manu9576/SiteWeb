@@ -28,36 +28,30 @@ class SNK_Adm_ListeRegistrations
     elseif(isset($_POST['delete']))
     {
       $this->registration = $this->_manager->get((int)$_POST['id']);
-
-      if(!is_null($registration))
-         $this->_manager->delete($registration);
+      $this->_manager->delete($registration);
 
       $this->contenu_enregistrement_html();
     }
     elseif(isset($_POST['valider']))
     {
-        $this->registration = $this->_manager->get((int)$_POST['id']);
-
-        $this->registration->setValider(1);
-        $this->_manager->addOrUpdate($this->registration);
+      $this->registration = $this->_manager->get((int)$_POST['id']);
+      $this->registration->setValider(1);
+      $this->_manager->addOrUpdate($this->registration);
 
       $this->contenu_enregistrement_html();
     }
     elseif(isset($_POST['devalider']))
     {
-        $this->registration = $this->_manager->get((int)$_POST['id']);
-
-        $this->registration->setValider(0);
+      $this->registration = $this->_manager->get((int)$_POST['id']);
+      $this->registration->setValider(0);
       $this->_manager->addOrUpdate($this->registration);
 
       $this->contenu_enregistrement_html();
     }
     elseif(isset($_POST['modify']))
     {
-        $this->registration = $this->_manager->get((int)$_POST['id']);
-
+      $this->registration = $this->_manager->get((int)$_POST['id']);
       $this->lectureChamps($_POST);
-
       $this->_manager->addOrUpdate($this->registration);
 
       $this->contenu_enregistrement_html();
@@ -71,31 +65,30 @@ class SNK_Adm_ListeRegistrations
   public function contenu_enregistrement_html()
   {
     $manager = new SNK_registrationManager();
-
     $enregistrements = $manager->getList();
 
     echo '<h1>'.get_admin_page_title().'</h1> </br>';
 
     ?>
       <style>
-      #tableau
-      {
-        width: 80%;
-      }
+        #tableau
+        {
+          width: 80%;
+        }
 
-      #tableau th, #tableau td
-      {
-        padding: 3px;
-        border: 1px solid #555;
-        text-align: center;
-      }
+        #tableau th, #tableau td
+        {
+          padding: 3px;
+          border: 1px solid #555;
+          text-align: center;
+        }
 
-      #tableau th
-      {
-        background: #444;
-        color: white;
-        font-weight: bold;
-      }
+        #tableau th
+        {
+          background: #444;
+          color: white;
+          font-weight: bold;
+        }
       </style>
 
       <table id="tableau">
@@ -142,22 +135,21 @@ class SNK_Adm_ListeRegistrations
     if(is_int($id))
     {
       $manager = new SNK_registrationManager();
-
       $registration = $manager->get($id);
 
     ?>
 
     <style>
-    label
-    {
-      width:200px;
-      display: inline-block;
-    }
+      label
+      {
+        width:200px;
+        display: inline-block;
+      }
 
-    input
-    {
-      width: 200px;
-    }
+      input
+      {
+        width: 200px;
+      }
     </style>
 
     <fieldset class="">
@@ -217,25 +209,25 @@ class SNK_Adm_ListeRegistrations
     {
 
       if(isset($array['nom']))
-          $this->registration->setNom( htmlspecialchars($array['nom']));
+          $this->registration->setNom(htmlspecialchars($array['nom']));
 
       if(isset($array['prenom']))
-          $this->registration->setPrenom( htmlspecialchars($array['prenom']));
+          $this->registration->setPrenom(htmlspecialchars($array['prenom']));
 
       if(isset($array['adresse']))
-          $this->registration->setAdresse( htmlspecialchars($array['adresse']));
+          $this->registration->setAdresse(htmlspecialchars($array['adresse']));
 
       if(isset($array['codePostal']))
           $this->registration->setCodePostal($array['codePostal']);
 
       if(isset($array['ville']))
-          $this->registration->setVille( htmlspecialchars($array['ville']));
+          $this->registration->setVille(htmlspecialchars($array['ville']));
 
       if(isset($array['telephone']))
-          $this->registration->setTelephone( htmlspecialchars($array['telephone']));
+          $this->registration->setTelephone(htmlspecialchars($array['telephone']));
 
       if(isset($array['email']))
-          $this->registration->setEmail( htmlspecialchars($array['email']));
+          $this->registration->setEmail(htmlspecialchars($array['email']));
 
       if(isset($array['nombre_heure']))
           $this->registration->setNombreHeuresValidees($array['nombre_heure']);

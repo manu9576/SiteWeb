@@ -102,15 +102,13 @@ class SNK_register_form
   public function messageUserNonEnregistree_HTLM()
   {
     ?>
-
-    <div class="post hentry ivycat-post" >
-      <h1 class="entry-title">Enregistrement impossible.</h1>
-      <p>
-      Il faut être connecté sur le site pour pouvoir s'enregistrer.</br>
-      Lien vers la connection du site : <a href="<?php echo wp_login_url( get_permalink() ); ?>" title="Login">Login</a>
-    </p>
-    </div>
-
+      <div class="post hentry ivycat-post" >
+        <h1 class="entry-title">Enregistrement impossible.</h1>
+        <p>
+          Il faut être connecté sur le site pour pouvoir s'enregistrer.</br>
+          Lien vers la connection du site : <a href="<?php echo wp_login_url( get_permalink() ); ?>" title="Login">Login</a>
+        </p>
+      </div>
     <?php
   }
 
@@ -120,14 +118,12 @@ class SNK_register_form
     $readonly = ($this->_registration->valider() == 0) ?  "": "readonly";
 
     if($readonly == "readonly")
-    {
       echo "<h3> La modification est impossible : le formulaire a été validé par l'administrateur </h3></br>";
-    }
+
     ?>
 
     <fieldset>
       <legend>Etat Civil </legend>
-
       <form action="" method="post">
         <p>
           <label for="nom">Nom : </label>

@@ -5,9 +5,13 @@ class SNK_registrationManager
 
   public function add(SNK_registration $registration)
   {
+
+    if(is_null($registration))
+      return;
+
     global $wpdb;
 
-     $wpdb->query( $wpdb->prepare("INSERT INTO {$wpdb->prefix}SNK_registrations(nom) VALUES (%s)", $registration->nom()));
+    $wpdb->query( $wpdb->prepare("INSERT INTO {$wpdb->prefix}SNK_registrations(nom) VALUES (%s)", $registration->nom()));
 
     $registration->hydrate([
       'id' => $wpdb->insert_id
@@ -25,6 +29,9 @@ class SNK_registrationManager
 
   public function delete(SNK_registration $registration)
   {
+    if(is_null($registration))
+      return;
+
     global $wpdb;
 
     $wpdb->query("DELETE FROM {$wpdb->prefix}SNK_registrations WHERE id = " . $registration->id());
@@ -90,4 +97,4 @@ class SNK_registrationManager
       $registration->email(), $registration->nombreHeuresValidees(), $registration->id() )));
   }
 }
- ?>
+?>
