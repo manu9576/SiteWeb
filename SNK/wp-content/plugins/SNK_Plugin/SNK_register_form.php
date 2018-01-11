@@ -3,6 +3,9 @@
 include_once WP_PLUGIN_DIR . '/wp-session-manager/wp-session-manager.php';
 include_once plugin_dir_path( __FILE__ ).'SNK_registrationManager.php';
 
+if ( ! function_exists( 'wp_handle_upload' ) ) {
+    require_once( ABSPATH . 'wp-admin/includes/file.php' );
+}
 
 class SNK_register_form
 {
@@ -94,6 +97,23 @@ class SNK_register_form
     if(isset($array['nombre_heure']))
       $this->_registration->setNombreHeuresValidees($array['nombre_heure']);
 
+    if(isset($array['file']))
+    {
+     /*  $uploadedfile = $_FILES['file'];
+
+
+
+$movefile = wp_handle_upload( $uploadedfile);
+
+if ( $movefile && !isset( $movefile['error'] ) ) {
+    echo "File is valid, and was successfully uploaded.\n";
+    var_dump( $movefile);
+} else {
+
+    echo $movefile['error'];
+}*/
+}
+
     if(is_a($this->_registration, 'SNK_registration'))
       $this->_manager->addOrUpdate($this->_registration);
 
@@ -121,13 +141,12 @@ class SNK_register_form
       echo "<h3> La modification est impossible : le formulaire a été validé par l'administrateur </h3></br>";
 
     ?>
-
     <fieldset>
       <legend>Etat Civil </legend>
       <form action="" method="post">
         <p>
           <label for="nom">Nom : </label>
-          <input type="text" <?=$readonly?> name="nom" id="nom" placeholder="<?= self::NOM ?>"value= "<?= htmlspecialchars($this->_registration->nom())?>"
+          <input type="text" <?=$readonly?> name="nom" id="nom" placeholder="<?= self::NOM ?>"value= "<?= htmlspecialchars($this->_registration->nom())?>" />
 
           <label for="prenom">Prénom : </label>
           <input type="text" <?=$readonly?> name="prenom" id="prenom" placeholder="<?= self::PRENOM ?>" value= "<?= htmlspecialchars($this->_registration->prenom())?>" />
@@ -173,6 +192,9 @@ class SNK_register_form
         <p>
           <label for="nombre_heure">Nombre d'heure validées : </label>
           <input type="number" <?=$readonly?> name="nombre_heure" id="nombre_heure"  value= "<?= $this->_registration->nombreHeuresValidees()?>"/>
+            <p>
+		            <input type='file' name='file' >
+            </p>
         </p>
         <p>
           <input value="Etat civil" type="submit" name="etatCivil"/>

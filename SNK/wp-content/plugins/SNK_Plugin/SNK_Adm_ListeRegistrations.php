@@ -27,32 +27,32 @@ class SNK_Adm_ListeRegistrations
     }
     elseif(isset($_POST['delete']))
     {
-      $this->registration = $this->_manager->get((int)$_POST['id']);
-      $this->_manager->delete($registration);
+      $this->_registration = $this->_manager->get((int)$_POST['id']);
+      $this->_manager->delete($this->_registration);
 
       $this->contenu_enregistrement_html();
     }
     elseif(isset($_POST['valider']))
     {
-      $this->registration = $this->_manager->get((int)$_POST['id']);
-      $this->registration->setValider(1);
-      $this->_manager->addOrUpdate($this->registration);
+      $this->_registration = $this->_manager->get((int)$_POST['id']);
+      $this->_registration->setValider(1);
+      $this->_manager->addOrUpdate($this->_registration);
 
       $this->contenu_enregistrement_html();
     }
     elseif(isset($_POST['devalider']))
     {
-      $this->registration = $this->_manager->get((int)$_POST['id']);
-      $this->registration->setValider(0);
-      $this->_manager->addOrUpdate($this->registration);
+      $this->_registration = $this->_manager->get((int)$_POST['id']);
+      $this->_registration->setValider(0);
+      $this->_manager->addOrUpdate($this->_registration);
 
       $this->contenu_enregistrement_html();
     }
     elseif(isset($_POST['modify']))
     {
-      $this->registration = $this->_manager->get((int)$_POST['id']);
+      $this->_registration = $this->_manager->get((int)$_POST['id']);
       $this->lectureChamps($_POST);
-      $this->_manager->addOrUpdate($this->registration);
+      $this->_manager->addOrUpdate($this->_registration);
 
       $this->contenu_enregistrement_html();
     }
@@ -134,10 +134,9 @@ class SNK_Adm_ListeRegistrations
 
     if(is_int($id))
     {
-      $manager = new SNK_registrationManager();
-      $registration = $manager->get($id);
-
+        $this->_registration =   $this->_manager->get($id);
     ?>
+
 
     <style>
       label
@@ -158,34 +157,34 @@ class SNK_Adm_ListeRegistrations
       <form action="" method="post">
         <p >
           <label for="nom">Nom : </label>
-          <input type="text"  name="nom" id="nom" placeholder="<?= self::NOM ?>"value= "<?= htmlspecialchars($registration->nom())?>"/>
+          <input type="text"  name="nom" id="nom" placeholder="<?= self::NOM ?>"value= "<?= htmlspecialchars($this->_registration->nom())?>"/>
           <br>
           <label for="prenom">Prénom : </label>
-          <input type="text"  name="prenom" id="prenom" placeholder="<?= self::PRENOM ?>" value= "<?= htmlspecialchars($registration->prenom())?>" />
+          <input type="text"  name="prenom" id="prenom" placeholder="<?= self::PRENOM ?>" value= "<?= htmlspecialchars($this->_registration->prenom())?>" />
           <br>
           <label for="adresse">Adresse : </label>
-          <input type="text" name="adresse" id="adresse" placeholder="<?= self::ADRESSE ?>" value= "<?= htmlspecialchars($registration->adresse())?>" />
+          <input type="text" name="adresse" id="adresse" placeholder="<?= self::ADRESSE ?>" value= "<?= htmlspecialchars($this->_registration->adresse())?>" />
           <br>
           <label for="codePostal">Code postal : </label>
-          <input type="number" name="codePostal" id="codePostal" value= <?= $registration->codePostal()?> />
+          <input type="number" name="codePostal" id="codePostal" value= <?= $this->_registration->codePostal()?> />
           <br>
           <label  for="ville">Ville : </label>
-          <input type="text"  name="ville" id="ville" placeholder="<?= self::VILLE ?>" value= "<?= htmlspecialchars($registration->ville())?>" />
+          <input type="text"  name="ville" id="ville" placeholder="<?= self::VILLE ?>" value= "<?= htmlspecialchars($this->_registration->ville())?>" />
           <br>
           <label for="telephone">Téléphone : </label>
-          <input type="tel" name="telephone" id="telephone" placeholder="<?= self::TELEPHONE ?>" value= "<?= htmlspecialchars($registration->telephone())?>" />
+          <input type="tel" name="telephone" id="telephone" placeholder="<?= self::TELEPHONE ?>" value= "<?= htmlspecialchars($this->_registration->telephone())?>" />
           <br>
           <label for="form-message">Email:</label>
-          <input type="email" name="email" id="email" placeholder="<?= self::EMAIL ?>" value= "<?= htmlspecialchars($registration->email())?>" />
+          <input type="email" name="email" id="email" placeholder="<?= self::EMAIL ?>" value= "<?= htmlspecialchars($this->_registration->email())?>" />
           <br>
           <label for="nombre_heure">Nombre d'heure validées : </label>
-          <input type="number" name="nombre_heure" id="nombre_heure"  value= "<?= $registration->nombreHeuresValidees()?>"/>
+          <input type="number" name="nombre_heure" id="nombre_heure"  value= "<?= $this->_registration->nombreHeuresValidees()?>"/>
           <br>
-          <input name="id" value=<?= $registration->id() ?> hidden=true/>
+          <input name="id" value=<?= $this->_registration->id() ?> hidden=true/>
           <br>
 
           <?php
-          if($registration->valider()== 0)
+          if($this->_registration->valider()== 0)
              echo '<input class="button-primary"  name="valider" value= "Valider enregistrement" type="submit"/>';
           else
             echo '<input class="button-primary"  name="devalider" value= "Retirer la validation" type="submit"/>';
@@ -209,29 +208,28 @@ class SNK_Adm_ListeRegistrations
     {
 
       if(isset($array['nom']))
-          $this->registration->setNom(htmlspecialchars($array['nom']));
+          $this->_registration->setNom(htmlspecialchars($array['nom']));
 
       if(isset($array['prenom']))
-          $this->registration->setPrenom(htmlspecialchars($array['prenom']));
+          $this->_registration->setPrenom(htmlspecialchars($array['prenom']));
 
       if(isset($array['adresse']))
-          $this->registration->setAdresse(htmlspecialchars($array['adresse']));
+          $this->_registration->setAdresse(htmlspecialchars($array['adresse']));
 
       if(isset($array['codePostal']))
-          $this->registration->setCodePostal($array['codePostal']);
+          $this->_registration->setCodePostal($array['codePostal']);
 
       if(isset($array['ville']))
-          $this->registration->setVille(htmlspecialchars($array['ville']));
+          $this->_registration->setVille(htmlspecialchars($array['ville']));
 
       if(isset($array['telephone']))
-          $this->registration->setTelephone(htmlspecialchars($array['telephone']));
+          $this->_registration->setTelephone(htmlspecialchars($array['telephone']));
 
       if(isset($array['email']))
-          $this->registration->setEmail(htmlspecialchars($array['email']));
+          $this->_registration->setEmail(htmlspecialchars($array['email']));
 
       if(isset($array['nombre_heure']))
-          $this->registration->setNombreHeuresValidees($array['nombre_heure']);
-
+          $this->_registration->setNombreHeuresValidees($array['nombre_heure']);
 
     }
 }
