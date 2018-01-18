@@ -7,6 +7,7 @@ if ( ! function_exists( 'wp_handle_upload' ) ) {
     require_once( ABSPATH . 'wp-admin/includes/file.php' );
 }
 
+
 class SNK_register_form
 {
   private $_registration;
@@ -97,25 +98,37 @@ class SNK_register_form
     if(isset($array['nombre_heure']))
       $this->_registration->setNombreHeuresValidees($array['nombre_heure']);
 
-    if(isset($array['file']))
+    if(isset($_FILES['file']))
     {
-     /*  $uploadedfile = $_FILES['file'];
+      $upload_dir=wp_upload_dir()['basedir'].'/'.$this->sanatizeName($this->_registration->nom()).'/';
 
+      if(!file_exists($upload_dir))
+        mkdir($upload_dir);
 
+      $tmp_file=$_FILES['file']['tmp_name'];
+      $target_file=basename($_FILES['file']['name']);
 
-$movefile = wp_handle_upload( $uploadedfile);
-
-if ( $movefile && !isset( $movefile['error'] ) ) {
-    echo "File is valid, and was successfully uploaded.\n";
-    var_dump( $movefile);
-} else {
-
-    echo $movefile['error'];
-}*/
-}
+      if(!move_uploaded_file($tmp_file, $upload_dir.($this->sanatizeName($target_file)))) //$this->_registration->nom()."/"
+        echo "Erreur au chargement du fichier !!<br/>";
+    }
 
     if(is_a($this->_registration, 'SNK_registration'))
       $this->_manager->addOrUpdate($this->_registration);
+
+  }
+
+  /*
+    retire les caratéres ~,;[]()
+    remplace les espaces par '_'
+  */
+  private function sanatizeName($file)
+  {
+    if(is_string($file))
+    {
+      preg_replace('/[^a-zA-Z0-9\-\._]/','', $file);
+    }
+
+    return str_replace(' ', '_', $file);
 
   }
 
@@ -188,19 +201,26 @@ if ( $movefile && !isset( $movefile['error'] ) ) {
     <fieldset>
       <legend>Formation continue </legend>
 
-      <form action="" method="post">
+      <form action="" method="post" enctype="multipart/form-data">
         <p>
           <label for="nombre_heure">Nombre d'heure validées : </label>
           <input type="number" <?=$readonly?> name="nombre_heure" id="nombre_heure"  value= "<?= $this->_registration->nombreHeuresValidees()?>"/>
+          <?php
+          if($readonly == "")
+          {
+            ?>
             <p>
-		            <input type='file' name='file' >
+		            <input type='file' name='file' id='file'>
             </p>
+            <?php
+          }
+          ?>
         </p>
         <p>
           <input value="Etat civil" type="submit" name="etatCivil"/>
           <?php
 
-            if($readonly != "readonly")
+            if($readonly == "")
               echo "<input value=\"Soummettre\" type=\"submit\" name=\"soumettre\"/>";
           ?>
 

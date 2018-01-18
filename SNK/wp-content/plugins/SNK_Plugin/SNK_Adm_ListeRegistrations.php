@@ -56,6 +56,24 @@ class SNK_Adm_ListeRegistrations
 
       $this->contenu_enregistrement_html();
     }
+    elseif(isset($_POST['file']))
+    {
+      $this->_registration = $this->_manager->get((int)$_POST['id']);
+      $file = '/var/www/SiteWeb/SNK/wp-content/uploads/'.$this->_registration->nom().'/60 millions de consommateurs Hors Série N°191 - Décembre 2017_Janvier 2018.torrent';
+
+      if (file_exists($file))
+      {
+          header('Content-Description: File Transfer');
+          header('Content-Type: application/octet-stream');
+          header('Content-Disposition: attachment; filename="'.basename($file).'"');
+          header('Expires: 0');
+          header('Cache-Control: must-revalidate');
+          header('Pragma: public');
+          header('Content-Length: ' . filesize($file));
+          readfile($file);
+          exit;
+      }
+    }
     else
     {
       $this->contenu_enregistrement_html();
@@ -137,7 +155,6 @@ class SNK_Adm_ListeRegistrations
         $this->_registration =   $this->_manager->get($id);
     ?>
 
-
     <style>
       label
       {
@@ -182,14 +199,23 @@ class SNK_Adm_ListeRegistrations
           <br>
           <input name="id" value=<?= $this->_registration->id() ?> hidden=true/>
           <br>
+          Fichiers :
+          <br>
+          <?php
+            $res = scandir(wp_upload_dir()['basedir'].'/'.$this->_registration->nom());
+            foreach($res as $file)
+              if($file != '.' && $file != '..')
+                echo '<a href='.wp_upload_dir()['baseurl'].'/'.$this->_registration->nom().'/'.$file .'>'.$file.'</a><br>';
+          ?>
+          <br>
+          <br>
 
           <?php
-          if($this->_registration->valider()== 0)
-             echo '<input class="button-primary"  name="valider" value= "Valider enregistrement" type="submit"/>';
-          else
-            echo '<input class="button-primary"  name="devalider" value= "Retirer la validation" type="submit"/>';
+            if($this->_registration->valider()== 0)
+              echo '<input class="button-primary"  name="valider" value= "Valider enregistrement" type="submit"/>';
+            else
+              echo '<input class="button-primary"  name="devalider" value= "Retirer la validation" type="submit"/>';
           ?>
-
           <input class="button-primary"  name="delete" value= "Supprimer enregistrement" type="submit"/>
           <br>
           <br>
